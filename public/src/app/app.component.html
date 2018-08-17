@@ -1,0 +1,36 @@
+<!--The content below is only a placeholder and can be replaced.-->
+<div style="text-align:center">
+  <h1>
+    Welcome to {{ title }}!
+  </h1>
+  <h3>Add a new task</h3>
+  <form (submit)="onSubmit()">
+      <p>{{ newTask | json}}</p>
+      <p>Title:</p>
+      <input type="text" name="newTask.title" [(ngModel)]="newTask.title">
+      <p>Description:</p>
+      <input type="text" name="newTask.description" [(ngModel)]="newTask.description"><br>
+      <input type="submit" value="Create Task">
+  </form>
+</div>
+<div style="text-align: center; margin-top: 10px">
+  <button (click)="getTasksFromService()">Get tasks</button>
+  <p *ngFor="let task of tasksAll">{{ task.title }} - {{ task.description }} -
+      <button (click)="getTaskById(task._id)">Show</button> -
+      <button (click)="editTask(task._id)">Edit</button> -
+      <button (click)="deleteTask(task._id)">Delete</button>
+  </p>
+</div>
+<div style="text-align: center;">
+  <app-task *ngIf="currentTask" [selectedTask]="currentTask"></app-task>
+</div>
+<div *ngIf="editting == true" style="text-align: center;">
+    <form (submit)="onEdit()">
+        <p>Title:</p>
+        <input type="text" name="currentTask[0].title" [(ngModel)]="currentTask[0].title" placeholder={{currentTask[0].title}}>
+        <p>Description:</p>
+        <input type="text" name="currentTask[0].description" [(ngModel)]="currentTask[0].description" placeholder="{{currentTask[0].description}}"><br>
+        <p>{{currentTask[0] | json}}</p>
+        <input type="submit" value="Update Task">
+    </form>
+</div>
